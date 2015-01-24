@@ -2,21 +2,7 @@
 ## that computes and caches the inverse the first time the inverse is calculated. 
 ## Subsequent calls return the cached result speeding up the calculation
 ##
-## An example of how to use the 2 functions is as follows:
-x <- matrix(c(1,1,1,1,1,2,1,2,1,1,1,0,1,4,2,3), nrow=4, ncol=4)
-
-### creates a cached version x, xC 
-xC <- makeCacheMatrix(x)
-
-### First call computes the inverse
-xinv1 <- cacheSolve(xC)
-
-### The second call is retrieved from cache
-xinv2  <- cacheSolve(xC)
-
-### verify that
-x     %*% xinv1 
-xinv2 %*%  x
+## An example on how to use the 2 functions is at the bottom of the page.
 
 ## Create a special "matrix",  which is a list with the following functions:
 ### 1. set the value of the matrix
@@ -43,7 +29,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## by makeCacheMatrix. However, it first checks to see if the inverse has already 
 ## been calculated. If so, it gets the inverse from the cache and skips the 
 ## computation. Otherwise, it calculates the inverse of the data and sets 
-# the value of the inverse in the cache via the setinverse function.
+## the value of the inverse in the cache via the setinverse function.
 
 cacheSolve <- function(x, ...) {
   ## Return a matrix that is the inverse of 'x'
@@ -57,3 +43,19 @@ cacheSolve <- function(x, ...) {
   x$setinverse(inv)
   inv
 }
+
+##    Example 
+x <- matrix(c(1,1,1,1,1,2,1,2,1,1,1,0,1,4,2,3), nrow=4, ncol=4)
+
+### creates a cached version x, xC 
+xC <- makeCacheMatrix(x)
+
+### First call computes the inverse
+xinv1 <- cacheSolve(xC)
+
+### The second call is retrieved from cache
+xinv2  <- cacheSolve(xC)
+
+### verify that
+x     %*% xinv1 
+xinv2 %*%  x
